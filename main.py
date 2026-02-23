@@ -59,6 +59,7 @@ def update_workflow(path: Path, versions: list[str]) -> bool:
     """
     yaml = YAML()
     yaml.preserve_quotes = True
+    yaml.indent(mapping=2, sequence=4, offset=2)
     data = yaml.load(path.read_text(encoding="utf-8"))
     if not isinstance(data, Mapping):
         return False

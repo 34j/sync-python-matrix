@@ -1,0 +1,50 @@
+[project]
+name = "sync-python-matrix"
+version = "0.1.0"
+description = "Sync GitHub Actions matrix with Python versions noted in classifiers in pyproject.toml"
+license = { text = "MIT" }
+authors = [
+  { name = "34j", email = "34j.95a2p@simplelogin.com" },
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["pyyaml"]
+
+[tool.ruff]
+line-length = 88
+lint.select = [
+  "B",   # flake8-bugbear
+  "D",   # flake8-docstrings
+  "C4",  # flake8-comprehensions
+  "S",   # flake8-bandit
+  "F",   # pyflake
+  "E",   # pycodestyle
+  "W",   # pycodestyle
+  "UP",  # pyupgrade
+  "I",   # isort
+  "RUF", # ruff specific
+  # "TID"
+]
+lint.ignore = [
+  "D203", # 1 blank line required before class docstring
+  "D205",
+  "D212", # Multi-line docstring summary should start at the first line
+  "D100", # Missing docstring in public module
+  "D104", # Missing docstring in public package
+  "D107", # Missing docstring in `__init__`
+  "D401", # First line of docstring should be in imperative mood
+  "E741",
+  "D200",
+  "E501"
+]
+lint.per-file-ignores."conftest.py" = [ "D100" ]
+lint.per-file-ignores."docs/conf.py" = [ "D100" ]
+lint.per-file-ignores."setup.py" = [ "D100" ]
+lint.per-file-ignores."tests/**/*" = [
+  "D100",
+  "D101",
+  "D102",
+  "D103",
+  "D104",
+  "S101",
+]

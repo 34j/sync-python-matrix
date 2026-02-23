@@ -8,7 +8,7 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["pyyaml"]
+dependencies = ["ruamel.yaml"]
 
 [project.scripts]
 sync-python-matrix = "main:run"

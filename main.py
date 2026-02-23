@@ -3,9 +3,10 @@
 import re
 import sys
 import tomllib
+from collections.abc import Mapping
 from pathlib import Path
 
-import yaml
+from ruamel.yaml import YAML
 
 
 def load_classifiers(pyproject_path: Path) -> list[str]:
@@ -56,16 +57,18 @@ def update_workflow(path: Path, versions: list[str]) -> bool:
         True if the file was modified.
 
     """
-    data = yaml.safe_load(path.read_text(encoding="utf-8"))
-    if not isinstance(data, dict):
+    yaml = YAML()
+    yaml.preserve_quotes = True
+    data = yaml.load(path.read_text(encoding="utf-8"))
+    if not isinstance(data, Mapping):
         return False
     jobs = data.get("jobs", {})
-    if not isinstance(jobs, dict):
+    if not isinstance(jobs, Mapping):
         return False
     changed = False
     for job in jobs.values():
-        strategy = job.get("strategy", {}) if isinstance(job, dict) else {}
-        matrix = strategy.get("matrix", {}) if isinstance(strategy, dict) else {}
+        strategy = job.get("strategy", {}) if isinstance(job, Mapping) else {}
+        matrix = strategy.get("matrix", {}) if isinstance(strategy, Mapping) else {}
         if not isinstance(matrix, dict):
             continue
         for key in list(matrix.keys()):
@@ -74,7 +77,7 @@ def update_workflow(path: Path, versions: list[str]) -> bool:
                     matrix[key] = versions
                     changed = True
     if changed:
-        path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+        yaml.dump(data, path)
     return changed
 
 

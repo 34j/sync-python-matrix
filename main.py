@@ -78,11 +78,17 @@ def update_workflow(path: Path, versions: list[str]) -> bool:
     return changed
 
 
-versions = load_classifiers(Path("pyproject.toml"))
-paths = [Path(p) for p in sys.argv[1:] if p.endswith((".yml", ".yaml"))]
-if not paths:
-    print("No workflow YAML paths provided.")
-    raise SystemExit(0)
+def run() -> int:
+    """Run the workflow matrix synchronization."""
+    versions = load_classifiers(Path("pyproject.toml"))
+    paths = [Path(p) for p in sys.argv[1:] if p.endswith((".yml", ".yaml"))]
+    if not paths:
+        print("No workflow YAML paths provided.")
+        return 0
+    for path in paths:
+        update_workflow(path, versions)
+    return 0
 
-for path in paths:
-    update_workflow(path, versions)
+
+if __name__ == "__main__":
+    raise SystemExit(run())

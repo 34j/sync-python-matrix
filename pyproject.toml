@@ -10,6 +10,11 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = ["pyyaml"]
 
+[project.scripts]
+sync-python-matrix = "main:run"
+
+
+
 [tool.ruff]
 line-length = 88
 lint.select = [

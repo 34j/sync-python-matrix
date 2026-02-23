@@ -1,7 +1,7 @@
 - id: sync-python-matrix
   name: Sync GitHub Actions Python version matrix from pyproject.toml
   description: Update matrix entries in GitHub Actions workflow files based on the Python versions specified in pyproject.toml classifiers.
-  entry: python main.py
+  entry: sync-python-matrix
   language: python
   pass_filenames: true
   files: ^pyproject\.toml$|^\.github/workflows/.*\.ya?ml$
